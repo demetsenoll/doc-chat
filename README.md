@@ -85,3 +85,4 @@ python 03_rag_dongusu.py
 - [ ] Çoklu doküman desteği
 - [ ] Tamamen local LLM desteği (Ollama)
 - [ ] Doküman güncelleme (sıfırlamadan ekleme)
+
