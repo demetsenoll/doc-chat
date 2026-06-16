@@ -1,0 +1,336 @@
+PLC ALARM KODLARI VE ÇÖZÜM REHBERİ
+CoilTech Endüstriyel Otomasyon Teknik Dokümantasyonu
+Versiyon 2.1 — Mayıs 2026
+
+========================================
+BÖLÜM 1: GÜÇ VE BESLEME ALARMLARI
+========================================
+
+ALARM KODU: E001 — Ana Güç Beslemesi Düşük Gerilim
+Açıklama: PLC'nin ana besleme gerilimi 220V AC nominal değerin yüzde 15 altına düşmüştür.
+Olası Nedenler:
+  - Şebeke gerilim dalgalanması
+  - Güç kaynağı arızası
+  - Kablo bağlantı gevşekliği
+  - Sigorta kısmî arızası
+Çözüm Adımları:
+  1. Multimetre ile besleme gerilimini ölç (L1-N arası 220V ±10% olmalı)
+  2. Güç kaynağı çıkış gerilimini kontrol et (24V DC çıkış için 23.5-24.5V olmalı)
+  3. Tüm güç bağlantı klemenslerini kontrol et, gevşek olanları sık
+  4. Sigorta değerlerini ve durumunu kontrol et
+  5. Sorun devam ederse güç kaynağı modülünü değiştir
+Önlem: UPS sistemi kurulumu önerilir. Aylık gerilim takibi yapılmalıdır.
+
+ALARM KODU: E002 — 24V DC Besleme Arızası
+Açıklama: PLC I/O modüllerini besleyen 24V DC hat kaybolmuştur veya kritik seviyenin altına düşmüştür.
+Olası Nedenler:
+  - SMPS (Anahtarlamalı Güç Kaynağı) arızası
+  - Kısa devre
+  - Aşırı yüklenme
+Çözüm Adımları:
+  1. 24V DC ray üzerindeki tüm yükleri sırayla devre dışı bırak
+  2. Kısa devreyi tespit etmek için yükleri tek tek bağla
+  3. SMPS çıkış gerilimini ölç
+  4. Aşırı ısınan kablo veya modül varsa tespit et
+  5. SMPS arızalıysa aynı marka ve modelle değiştir
+Önlem: SMPS çıkışına voltmetre ile sürekli izleme ekle.
+
+ALARM KODU: E003 — Pil Gerilimi Düşük
+Açıklama: PLC CPU modülündeki yedek pil gerilimi 2.8V'un altına düşmüştür. Program ve veri kaybı riski vardır.
+Olası Nedenler:
+  - Pilin ömrünü tamamlaması (ortalama 3-5 yıl)
+  - Uzun süre güçsüz bekletme
+Çözüm Adımları:
+  1. PLC'yi çalışır durumda tut (güç kesme)
+  2. Aynı tip pili hazırla (genellikle CR2032 veya özel PLC pili)
+  3. Üretici dokümantasyonuna göre pili değiştir
+  4. Değişim sonrası program ve veri bütünlüğünü doğrula
+Önlem: Pil değişimini 3 yılda bir önleyici bakım olarak planla.
+
+========================================
+BÖLÜM 2: I/O MODÜLLERİ ALARMLARI
+========================================
+
+ALARM KODU: E010 — Dijital Giriş Modülü Haberleşme Hatası
+Açıklama: CPU, DI (Dijital Input) modülüyle haberleşemeyor. Rack üzerindeki slot bağlantısı kopmuş olabilir.
+Olası Nedenler:
+  - Modülün yerinden oynaması
+  - Backplane konektör kirliliği
+  - Modül arızası
+  - Yanlış slot adresleme
+Çözüm Adımları:
+  1. PLC'yi güvenli şekilde durdur
+  2. İlgili DI modülünü rack'tan çıkar, konektörleri temizle
+  3. Modülü yerine tak ve vidaları sık
+  4. CPU hata logunu temizle ve sistemi yeniden başlat
+  5. Sorun devam ederse modülü yedekle ile değiştir
+  6. Yazılımda slot adresleme konfigürasyonunu kontrol et
+Önlem: Yılda bir kez tüm modül konektörlerini temizle.
+
+ALARM KODU: E011 — Dijital Çıkış Modülü Aşırı Akım
+Açıklama: DO (Dijital Output) modülünün bir veya birden fazla kanalı aşırı akım çekiyor. Modül koruması devreye girmiş olabilir.
+Olası Nedenler:
+  - Aktuatör veya röle sarımı kısa devre
+  - Yanlış yük bağlantısı
+  - Modül kanal arızası
+Çözüm Adımları:
+  1. Alarm veren kanalı yazılımdan devre dışı bırak
+  2. O kanala bağlı yükü fiziksel olarak söküp akımı ölç
+  3. Yük normalse (kısa devre yoksa) modül kanalı arızalı demektir
+  4. Yük kısa devreliyse yükü değiştir
+  5. Modül kanalı arızalıysa modülü değiştir veya başka kanal kullan
+Önlem: Her kanal için sigorta veya elektronik koruma kullan.
+
+ALARM KODU: E012 — Analog Giriş Sinyal Kesintisi
+Açıklama: AI (Analog Input) kanalında sinyal 4mA altına düşmüştür (4-20mA sistemlerde). Kablo kopuğu veya sensör arızası.
+Olası Nedenler:
+  - Sensör besleme kablosu kopuğu
+  - Sensör arızası
+  - Kablo bağlantı noktasında korozyon
+  - Kablo hasarı (mekanik veya kimyasal)
+Çözüm Adımları:
+  1. Sahaya git, sensör klemenslerinde 24V DC beslemeyi kontrol et
+  2. Sensör çıkış sinyalini (mA değerini) ölç
+  3. Kabloyu uçtan uca test et, kopuk nokta varsa tespit et
+  4. Klemens vidalarını kontrol et, korozyonlu olanları temizle
+  5. Sensör arızalıysa aynı tip sensörle değiştir ve kalibrasyon yap
+Önlem: Kablo güzergahlarını yılda bir gözle kontrol et.
+
+ALARM KODU: E013 — Analog Çıkış Sinyal Hatası
+Açıklama: AO (Analog Output) kanalı beklenen sinyal değerini üretemiyor.
+Olası Nedenler:
+  - Yük direncinin spec dışı olması
+  - Modül arızası
+  - Kablo bağlantı sorunu
+Çözüm Adımları:
+  1. AO kanalı çıkışını multimetre veya kalibratörle ölç
+  2. Bağlı cihazın (frekans sürücüsü, vana vb.) giriş empedansını kontrol et
+  3. Yazılımda AO kanalı ölçekleme parametrelerini doğrula
+  4. Sorun devam ederse modülü yedekle ile değiştir
+Önlem: Devreye alım sırasında tüm AO kanallarını loop testi ile doğrula.
+
+========================================
+BÖLÜM 3: HABERLEŞME ALARMLARI
+========================================
+
+ALARM KODU: E020 — Profibus DP Haberleşme Hatası
+Açıklama: Profibus ağındaki bir veya birden fazla slave cihaz haberleşmeyi kaybetti.
+Olası Nedenler:
+  - Bus termination direncinin eksik veya hatalı olması
+  - Kablo hasarı veya kopuğu
+  - Slave cihaz arızası
+  - Adres çakışması
+  - Gürültülü ortam (EMI)
+Çözüm Adımları:
+  1. Profibus diagnostik aracıyla hatalı slave adresini tespit et
+  2. Bus terminatörlerin sadece ağın iki ucunda olduğunu doğrula
+  3. Bus kablo direncini ölç (120 ohm görünmeli)
+  4. Hatalı slave cihazı fiziksel olarak kontrol et, LED durumunu incele
+  5. Adres ayarlarını kontrol et, çakışma varsa düzelt
+  6. Kablo güzergahını EMI kaynaklarından uzaklaştır
+Önlem: Kablo kalitesi minimum Profibus Class B olmalı. Ekranlama topraklamasını kontrol et.
+
+ALARM KODU: E021 — Modbus TCP Bağlantı Zaman Aşımı
+Açıklama: PLC, Modbus TCP üzerinden bağlı olan cihaza (SCADA, HMI, inverter vb.) ulaşamıyor.
+Olası Nedenler:
+  - Ağ switch arızası veya port sorunu
+  - IP adresi değişikliği
+  - Ethernet kablo hasarı
+  - Timeout parametresi çok kısa ayarlı
+Çözüm Adımları:
+  1. Switch üzerindeki ilgili port LED'ini kontrol et
+  2. PLC'den hedef IP adresine ping at
+  3. Hedef cihazın IP adresini ve subnet mask'ini doğrula
+  4. Ethernet kablosunu başka bir porta taşı, test et
+  5. PLC yazılımında timeout değerini 3000ms'ye çıkar
+  6. Firewall veya VLAN ayarlarını kontrol et
+Önlem: Kritik haberleşme bağlantıları için yedekli Ethernet hattı kullan.
+
+ALARM KODU: E022 — EtherCAT Slave Kayıp
+Açıklama: EtherCAT ağında bir slave cihaz (servo sürücü, I/O terminali vb.) ağdan düştü.
+Olası Nedenler:
+  - Slave güç kaybı
+  - Kablo kopuğu
+  - EMI etkisi
+  - Slave firmware uyumsuzluğu
+Çözüm Adımları:
+  1. TwinCAT veya ilgili yazılımla network topology'yi incele
+  2. Hangi slave'in düştüğünü tespit et
+  3. O slave'in güç beslemesini kontrol et
+  4. Kablo bağlantılarını fiziksel olarak kontrol et
+  5. Slave'i yeniden başlat ve ağa dahil et
+  6. Firmware versiyonunu üretici önerisine göre güncelle
+Önlem: EtherCAT kabloları CAT5e veya üzeri olmalı, büküm çifti korunmalıdır.
+
+========================================
+BÖLÜM 4: HAREKET KONTROL ALARMLARI
+========================================
+
+ALARM KODU: E030 — Servo Motor Aşırı Yük
+Açıklama: Servo motorun anlık akımı nominal değerin yüzde 150'sini 3 saniyeden fazla aştı.
+Olası Nedenler:
+  - Mekanik sıkışma veya aşırı sürtünme
+  - Yanlış moment limiti ayarı
+  - Zayıf ivmelenme/yavaşlama parametreleri
+  - Mekanik rezonans
+Çözüm Adımları:
+  1. Motoru durdu, mili elle döndürmeye çalış — sert hissediyorsa mekanik sorun var
+  2. Servo sürücü parametre listesinde peak current log'una bak
+  3. Hız/ivme profilini yumuşat (jerk parametresini düşür)
+  4. Moment limit değerini uygulamaya göre doğru ayarla
+  5. Kılavuz ray, rulman ve vidalı mile bakım yap
+  6. Sorun devam ederse motor ve sürücüyü birlikte test et
+Önlem: 6 ayda bir mekanik bakım planla. Yük hücresi ile gerçek yük ölçümü yap.
+
+ALARM KODU: E031 — Encoder Sinyal Hatası
+Açıklama: Servo veya step motor encoder'ından gelen sinyal hatalı veya kopuk.
+Olası Nedenler:
+  - Encoder kablo hasarı
+  - Encoder optik disk kirliliği veya hasarı
+  - Elektriksel gürültü
+  - Encoder güç beslemesi sorunu
+Çözüm Adımları:
+  1. Encoder kablosunu gözle kontrol et, ezik veya kırık nokta var mı bak
+  2. Encoder besleme gerilimini ölç (5V veya 24V tipine göre)
+  3. Sürücü diagnostiğinde encoder hata kodunu incele
+  4. Kablo ekranını sadece sürücü tarafında toprakla
+  5. Encoder yüzeyini temiz basınçlı havayla temizle
+  6. Sorun devam ederse encoder değiştir
+Önlem: Encoder kablosunu güç kablolarından en az 10cm uzak güzergahla çek.
+
+ALARM KODU: E032 — Pozisyon Sapma Hatası
+Açıklama: Motorun gerçek pozisyonu, komut pozisyonundan izin verilen sapma (following error) değerini aştı.
+Olası Nedenler:
+  - PID kazanç parametreleri yanlış
+  - Mekanik backlash fazla
+  - Motor boyutu yetersiz (aşırı yüklenme)
+  - Hız profilindeki ivme çok yüksek
+Çözüm Adımları:
+  1. Sürücü yazılımında following error değerini incele
+  2. Auto-tuning fonksiyonunu çalıştır
+  3. İvme değerini yüzde 20 azalt, testi tekrarla
+  4. Mekanik bağlantıdaki boşluğu (backlash) ölç
+  5. Yük ataletini (inertia) hesapla ve sürücüye gir
+  6. Motor nominal torku ile uygulama yük torku uyumunu kontrol et
+Önlem: Devreye almada mutlaka auto-tuning yap ve parametreleri kaydet.
+
+========================================
+BÖLÜM 5: SÜREÇ ALARMLARI
+========================================
+
+ALARM KODU: E040 — Sıcaklık Yüksek Alarm
+Açıklama: İzlenen bölgede sıcaklık birinci eşik değerini (High Alarm) geçti. Üretim kalitesi etkilenebilir.
+Eşik Değerleri: Uyarı: +5°C nominal üzeri / Alarm: +10°C nominal üzeri / Trip: +15°C nominal üzeri
+Olası Nedenler:
+  - Soğutma sistemi yetersizliği
+  - Fan arızası
+  - Isı eşanjörü kirliliği
+  - Ortam sıcaklığı yüksekliği
+Çözüm Adımları:
+  1. Fiziksel olarak bölgeyi gözlemle, sıcak nokta var mı belirle
+  2. Soğutma fanlarının çalışıp çalışmadığını kontrol et
+  3. Isı eşanjörü ve filtrelerini temizle
+  4. Ortam sıcaklığını ölç, 40°C üzerindeyse ek soğutma gereklidir
+  5. Soğutma suyu sistemleri için flow rate ve basıncı kontrol et
+Önlem: Soğutma sistemini aylık kontrol listesine ekle.
+
+ALARM KODU: E041 — Basınç Düşük Alarm
+Açıklama: Pnömatik veya hidrolik sistemde basınç beklenen değerin altına düştü.
+Nominal Değerler: Pnömatik 6 bar / Hidrolik 120-200 bar (sisteme göre değişir)
+Olası Nedenler:
+  - Kompresör veya pompa arızası
+  - Kaçak bağlantı noktası
+  - Filtre tıkanması
+  - Güvenlik valfi açık kalması
+Çözüm Adımları:
+  1. Basınç göstergesini doğrula, sensör arızası olabilir
+  2. Sistemde görünür kaçak noktası ara (sıkıştırılmış hava için sabun köpüğü kullan)
+  3. Filtre ve susturucuları kontrol et
+  4. Kompresör veya pompa çıkış basıncını ölç
+  5. Güvenlik valfinin ayar basıncını kontrol et
+Önlem: Haftalık basınç logu tut. Bağlantı noktalarını 3 ayda bir sıkıştır.
+
+ALARM KODU: E042 — Seviye Sensörü Arızası
+Açıklama: Tank veya hazne seviye sensöründen sinyal gelmiyor veya sinyal mantıksal olarak tutarsız.
+Olası Nedenler:
+  - Sensör kirlenmiş veya kaplanmış
+  - Elektrik bağlantı sorunu
+  - Sensör arızası
+  - Yanlış kalibrasyon
+Çözüm Adımları:
+  1. Sensörü fiziksel olarak kontrol et, temizle
+  2. Besleme gerilimini ve çıkış sinyalini ölç
+  3. Manuel seviye ölçümüyle sensör değerini karşılaştır
+  4. Kalibrasyon parametrelerini kontrol et ve sıfırla
+  5. Arızalı sensörü değiştir
+Önlem: Kimyasal ortamlarda uygun malzemeden sensör seç. 6 ayda bir kalibrasyon yap.
+
+========================================
+BÖLÜM 6: GÜVENLİK SİSTEMİ ALARMLARI
+========================================
+
+ALARM KODU: E050 — Acil Durdurma Aktif
+Açıklama: Sahada bir veya birden fazla acil durdurma butonu basılmıştır. Sistem güvenli durumda bekliyor.
+Çözüm Adımları:
+  1. Sahaya git, hangi acil stop butonunun basılı olduğunu tespit et
+  2. Tehlikeli durum var mı kontrol et, alanı güvenli hale getir
+  3. Acil stop butonunu resetle (saat yönünde çevir veya çek)
+  4. PLC üzerindeki reset butonuna bas veya HMI'dan reset yap
+  5. Sistemi yavaşça tekrar devreye al
+ÖNEMLİ: Acil stop nedeni araştırılmadan sistemi tekrar başlatma.
+
+ALARM KODU: E051 — Güvenlik Kapısı Açık
+Açıklama: Makine çevresindeki güvenlik kapısı veya bariyeri açık. Robot veya hareket eden mekanizma durdu.
+Çözüm Adımları:
+  1. Güvenlik kapısının gerçekten açık olup olmadığını kontrol et
+  2. Kapı kapalıysa güvenlik kilidi (safety switch) arızası olabilir
+  3. Safety switch bağlantılarını ve kablo bütünlüğünü kontrol et
+  4. Safety switch LED durumuna bak
+  5. Arızalı switch'i güvenlik sertifikalı yedekle değiştir
+  6. Değişim sonrası güvenlik fonksiyon testini (SIL/PLe test) gerçekleştir
+ÖNEMLİ: Güvenlik bileşenlerini bypass etme veya atlatma.
+
+ALARM KODU: E052 — İki El Kontrol Hatası
+Açıklama: İki el kontrol devresi çalışmıyor. Her iki butonun eş zamanlı (500ms içinde) basılması gerekiyor.
+Olası Nedenler:
+  - Bir buton arızalı
+  - Kablo kopuğu
+  - Zamanlama hatası (operatör kaynaklı)
+  - Güvenlik rölesi arızası
+Çözüm Adımları:
+  1. Her iki butonun mekanik durumunu test et
+  2. Güvenlik rölesi giriş ve çıkış sinyallerini ölç
+  3. Buton kabloları üzerinde süreklilik testi yap
+  4. Güvenlik rölesini resetle
+  5. Test prosedürüne göre iki el kontrolü tekrar dene
+Önlem: Güvenlik devrelerini aylık fonksiyon testi ile doğrula.
+
+========================================
+BAKIM TAKVİMİ ÖNERİSİ
+========================================
+
+Günlük Kontroller:
+  - Alarm loglarını incele
+  - Güç besleme gerilim değerlerini oku
+  - Soğutma sistemi çalışıyor mu kontrol et
+
+Haftalık Kontroller:
+  - Tüm kablo bağlantılarını gözle kontrol et
+  - I/O sinyal değerlerini nominal ile karşılaştır
+  - Pnömatik/hidrolik basınç logunu incele
+
+Aylık Kontroller:
+  - Haberleşme istatistiklerini (hata sayısı) kaydet
+  - Filtre ve soğutucu temizliği yap
+  - Güvenlik fonksiyon testlerini gerçekleştir
+
+3 Aylık Kontroller:
+  - Tüm kablo bağlantı klemenslerini sık
+  - Encoder ve sensör kalibrasyonlarını doğrula
+  - Yedek parça stoğunu güncelle
+
+Yıllık Kontroller:
+  - Tüm modül konektörlerini temizle
+  - PLC pil gerilimini ölç, gerekiyorsa değiştir
+  - Yazılım ve firmware yedeklerini al
+  - Topraklama dirençlerini ölç (max 10 ohm)

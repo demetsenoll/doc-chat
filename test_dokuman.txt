@@ -1,0 +1,34 @@
+COILTECH ŞİRKET EL KİTABI
+
+1. ŞİRKET HAKKINDA
+CoilTech, 2018 yılında İstanbul'da kurulmuş bir teknoloji şirketidir. Endüstriyel otomasyon, yazılım geliştirme ve yapay zeka çözümleri alanında faaliyet göstermektedir. Şirketin vizyonu, Türkiye'nin önde gelen teknoloji şirketlerinden biri olmaktır.
+
+Merkez ofis Levent, İstanbul'dadır. 2022 yılında açılan Ankara ofisi ile birlikte iki lokasyonda hizmet verilmektedir. Toplam çalışan sayısı 45 kişi olup bunların 12'si Ar-Ge departmanında görev yapmaktadır.
+
+2. İNSAN KAYNAKLARI POLİTİKALARI
+
+2.1 Çalışma Saatleri
+Standart çalışma saatleri hafta içi 09:00-18:00 arasındadır. Öğle arası 12:00-13:00 olarak belirlenmiştir. Fazla mesai durumunda çalışanlara ek ücret veya izin hakkı tanınmaktadır.
+
+2.2 Uzaktan Çalışma
+Uzaktan çalışma politikasına göre tüm çalışanlar haftada 2 gün evden çalışabilir. Uzaktan çalışma günleri pazartesi veya cuma olarak tercih edilmesi önerilmektedir. Müşteri toplantıları olan günlerde ofiste bulunmak zorunludur.
+
+2.3 İzin Politikası
+Her çalışanın yıllık 14 iş günü izin hakkı bulunmaktadır. Deneme süresini tamamlayan çalışanlar bu haktan yararlanabilir. İzin talepleri en az 1 hafta öncesinden yöneticiye bildirilmelidir. Hastalık izni için doktor raporu ibrazı gerekmektedir.
+
+2.4 Maaş ve Yan Haklar
+Maaşlar her ayın 5'inde banka hesaplarına yatırılmaktadır. Tüm çalışanlara özel sağlık sigortası sağlanmaktadır. Yemek kartı aylık 2.000 TL olarak tanımlanmıştır. Yılda bir kez performans değerlendirmesi yapılarak zam oranları belirlenir.
+
+3. YAZILIM GELİŞTİRME SÜREÇLERİ
+
+3.1 Kullanılan Teknolojiler
+Backend geliştirmede Python (FastAPI, Django) ve Node.js kullanılmaktadır. Frontend tarafında React ve Vue.js tercih edilmektedir. Veritabanı olarak PostgreSQL ve MongoDB kullanılmaktadır. Yapay zeka projelerinde PyTorch ve Hugging Face kütüphaneleri kullanılmaktadır.
+
+3.2 Proje Yönetimi
+Tüm projeler Agile metodolojisi ile yönetilmektedir. İki haftalık sprint döngüleri uygulanmaktadır. Jira proje yönetim aracı olarak kullanılmaktadır. Her Pazartesi sabahı haftalık stand-up toplantısı yapılmaktadır.
+
+3.3 Kod Kalite Standartları
+Tüm kodlar pull request sürecinden geçmelidir. En az iki developer tarafından code review yapılmalıdır. Unit test coverage minimum yüzde 80 olmalıdır. CI/CD pipeline olarak GitHub Actions kullanılmaktadır.
+
+4. GÜVENLİK POLİTİKALARI
+Şirket verileri yalnızca şirket cihazlarında işlenebilir. VPN kullanımı zorunludur. Şifreler en az 12 karakter olmalı ve üç ayda bir değiştirilmelidir. Müşteri verileri KVKK kapsamında korunmaktadır.
